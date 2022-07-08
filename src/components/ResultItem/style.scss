@@ -1,0 +1,15 @@
+.ResultItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 10px;
+    border: 3px solid teal;
+    border-radius: 5px;
+    background-color: #fff;
+
+    div:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}

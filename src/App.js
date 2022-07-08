@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
+import Search from './components/Search';
+import ResultsList from './components/ResultsList';
+import searchRepo from './API/searchRepo';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [text, setText] = useState(false);
+
+    const getData = async (keyword) => {
+        try {
+            setIsLoading(true);
+            setText('Загрузка...');
+            setData(await searchRepo.getAll(keyword));
+            setIsLoading(false);
+        } catch (error) {
+            setText('Что-то пошло не так...');
+            console.log(error);
+        }
+    };
+
+    return (
+        <div className="App">
+            <Search newData={getData} />
+            {!isLoading ? <ResultsList data={data} /> : <h1>{text}</h1>}
+        </div>
+    );
 }
 
 export default App;
